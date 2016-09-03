@@ -22,7 +22,7 @@ define('app',['exports', './todo'], function (exports, _todo) {
     }
 
     App.prototype.addTodo = function addTodo() {
-      if (this.discription) {
+      if (this.todoDescription) {
         this.todos.push(new _todo.Todo(this.todoDescription));
         this.todoDescription = '';
       }
@@ -87,15 +87,6 @@ define('main',['exports', './environment'], function (exports, _environment) {
     });
   }
 });
-define('resources/index',["exports"], function (exports) {
-  "use strict";
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.configure = configure;
-  function configure(config) {}
-});
 define('todo',["exports"], function (exports) {
   "use strict";
 
@@ -109,12 +100,21 @@ define('todo',["exports"], function (exports) {
     }
   }
 
-  var Todo = exports.Todo = function Todo(discription) {
+  var Todo = exports.Todo = function Todo(description) {
     _classCallCheck(this, Todo);
 
-    this.discription = discription;
+    this.description = description;
     this.done = false;
   };
 });
-define('text!app.html', ['module'], function(module) { module.exports = "<template>\n  <h1>${heading}</h1>\n\n  <form submit.trigger=\"addTodo()\">\n    <input type=\"text\" name=\"name\" value.bind=\"todoDescription\">\n    <button type=\"button\" name=\"button\">Add Todo</button>\n  </form>\n\n</template>\n"; });
+define('resources/index',["exports"], function (exports) {
+  "use strict";
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.configure = configure;
+  function configure(config) {}
+});
+define('text!app.html', ['module'], function(module) { module.exports = "<template>\n  <h1>${heading}</h1>\n\n  <form submit.trigger=\"addTodo()\">\n    <input type=\"text\" value.bind=\"todoDescription\">\n    <button type=\"submit\">Add Todo</button>\n  </form>\n\n  <ul>\n    <li repeat.for=\"todo of todos\">\n      <input type=\"checkbox\" checked.bind=\"todo.done\">\n      <span css=\"text-decoration: ${todo.done ? 'line-through' : 'none'}\">\n      <span>\n        ${todo.description}\n      </span>\n      <button click.trigger=\"removeTodo(todo)\">Remove</button>\n    </li>\n  </ul>\n\n</template>\n"; });
 //# sourceMappingURL=app-bundle.js.map
